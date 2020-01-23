@@ -5,6 +5,7 @@ import * as Builder from 'roles/builder.js';
 import * as Upgrader from 'roles/upgrader.js';
 import * as Tower from 'struct/tower.js';
 import * as Spawn from 'struct/spawn.js';
+import _ from "lodash";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
@@ -23,7 +24,6 @@ export let loop = () : any => {
   let towers = thisRoom.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
   console.log(JSON.stringify(towers));
   towers.forEach((tower) => Tower.run(tower));
-
 
   let harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
   console.log('Harvesters: ' + harvesters.length);
