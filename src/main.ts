@@ -8,8 +8,9 @@ import * as Spawn from 'struct/spawn.js';
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
-export const loop = ErrorMapper.wrapLoop(() => {
+export let loop = () : any => {
   console.log(`Current game tick is ${Game.time}`);
+  console.log('Running new ts deployment');
 
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
@@ -36,10 +37,10 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
   };
 
-  if(harvesters.length < 2) {
+  if (harvesters.length < 2) {
     let newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
-    Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, options);
+    Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], newName, options);
   }
 
   // Trouble code, can't figure out how to call the other function in the module
@@ -66,19 +67,21 @@ export const loop = ErrorMapper.wrapLoop(() => {
         upgrading: false
       }
     };
-    Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, options);
+    Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], newName, options);
   }
 
-  for(let name in Game.creeps) {
+  for (let name in Game.creeps) {
     let creep = Game.creeps[name];
-    if(creep.memory.role == 'builder') {
+    if (creep.memory.role == 'builder') {
       Builder.run(creep);
     }
-    if(creep.memory.role == 'harvester') {
+    if (creep.memory.role == 'harvester') {
       Harvester.run(creep);
     }
-    if(creep.memory.role == 'upgrader') {
+    if (creep.memory.role == 'upgrader') {
       Upgrader.run(creep);
     }
   }
-});
+};
+// TODO: ErrorMapper has a dependency issue that is not fixed yet: https://github.com/screepers/screeps-typescript-starter/issues/102#issuecomment-496351851
+// loop = ErrorMapper.wrapLoop(() => {};
