@@ -1,0 +1,3 @@
+interface MyCreepMemory extends CreepMemory {
+
+}
