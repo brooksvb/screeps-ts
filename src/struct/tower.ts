@@ -1,10 +1,5 @@
-
-const drawUi = function (tower: any) {
-
-};
-
-const repairClosest = function(tower : any) {
-  let closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+const repairClosest = (tower: any) => {
+  const closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
     filter: (structure: any) => structure.hits < structure.hitsMax
   });
   if(closestDamagedStructure) {
@@ -12,18 +7,14 @@ const repairClosest = function(tower : any) {
   }
 };
 
-const attackClosest = function(tower: any) {
-  let closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+const attackClosest = (tower: any) => {
+  const closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
   if(closestHostile) {
     tower.attack(closestHostile);
   }
 };
 
-/** @param {StructureTower} tower **/
-export const run = function(tower: any) {
-  drawUi(tower);
-
+export const run = (tower: any) => {
   repairClosest(tower);
   attackClosest(tower);
-
 };
