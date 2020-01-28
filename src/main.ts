@@ -1,14 +1,17 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 
+import _ from "lodash";
 import * as Builder from 'roles/builder.js';
 import * as Harvester from 'roles/harvester.js';
 import * as Upgrader from 'roles/upgrader.js';
+import * as Spawn from 'struct/spawn.js';
 import * as Tower from 'struct/tower.js';
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
-export const loop = ErrorMapper.wrapLoop(() => {
+export let loop = () : any => {
   console.log(`Current game tick is ${Game.time}`);
+  console.log('Running new ts deployment');
 
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
@@ -21,7 +24,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
   const towers = thisRoom.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
   console.log('Towers:' + JSON.stringify(towers));
   towers.forEach((tower) => Tower.run(tower));
-
 
   const harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
   console.log('Harvesters: ' + harvesters.length);
@@ -86,4 +88,6 @@ export const loop = ErrorMapper.wrapLoop(() => {
       Upgrader.run(creep);
     }
   }
-});
+};
+// TODO: ErrorMapper has a dependency issue that is not fixed yet: https://github.com/screepers/screeps-typescript-starter/issues/102#issuecomment-496351851
+// loop = ErrorMapper.wrapLoop(loop);
