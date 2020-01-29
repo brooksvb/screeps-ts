@@ -20,6 +20,7 @@ export let loop = () : any => {
     }
   }
 
+  // TODO: Tower's do not have a way to get energy yet
   const thisRoom = Game.spawns.Spawn1.room;
   const towers = thisRoom.find(FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
   console.log('Towers:' + JSON.stringify(towers));

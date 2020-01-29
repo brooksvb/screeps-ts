@@ -13,7 +13,7 @@ interface Memory {
   log: any;
 }
 
-// `global` extension samples
+// `global` extension sampleso
 declare namespace NodeJS {
   interface Global {
     log: any;
